@@ -4,6 +4,7 @@ go:
   - 1.10
 
 install:
+  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
   - make get-deps
 
 script:
