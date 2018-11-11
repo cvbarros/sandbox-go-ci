@@ -1,12 +1,12 @@
 .PHONY: build build-alpine clean test help default
 
-BIN_NAME=sandbox
+BIN_NAME=sandbox-go-ci
 
 VERSION := $(shell grep "const Version " version/version.go | sed -E 's/.*"(.+)"$$/\1/')
 GIT_COMMIT=$(shell git rev-parse HEAD)
 GIT_DIRTY=$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)
 BUILD_DATE=$(shell date '+%Y-%m-%d-%H:%M:%S')
-IMAGE_NAME := "cvbarros/sandbox"
+IMAGE_NAME := "cvbarros/sandbox-go-ci"
 
 default: test
 
@@ -23,7 +23,7 @@ help:
 build:
 	@echo "building ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
-	go build -ldflags "-X github.com/cvbarros/sandbox/version.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X github.com/cvbarros/sandbox/version.BuildDate=${BUILD_DATE}" -o bin/${BIN_NAME}
+	go build -ldflags "-X github.com/cvbarros/sandbox-go-ci/version.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X github.com/cvbarros/sandbox-go-ci/version.BuildDate=${BUILD_DATE}" -o bin/${BIN_NAME}
 
 get-deps:
 	dep ensure
