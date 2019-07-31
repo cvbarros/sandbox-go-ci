@@ -1,5 +1,6 @@
 .PHONY: build build-alpine clean test help default
 
+export GO111MODULE=on
 BIN_NAME=sandbox-go-ci
 
 VERSION := $(shell grep "const Version " version/version.go | sed -E 's/.*"(.+)"$$/\1/')
@@ -24,9 +25,6 @@ build:
 	@echo "building ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
 	go build -ldflags "-X github.com/cvbarros/sandbox-go-ci/version.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X github.com/cvbarros/sandbox-go-ci/version.BuildDate=${BUILD_DATE}" -o bin/${BIN_NAME}
-
-get-deps:
-	dep ensure
 
 clean:
 	@test ! -e bin/${BIN_NAME} || rm bin/${BIN_NAME}
