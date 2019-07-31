@@ -26,6 +26,9 @@ build:
 	@echo "GOPATH=${GOPATH}"
 	go build -ldflags "-X github.com/cvbarros/sandbox-go-ci/version.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X github.com/cvbarros/sandbox-go-ci/version.BuildDate=${BUILD_DATE}" -o bin/${BIN_NAME}
 
+builder-action:
+	docker run --rm -e GITHUB_WORKSPACE='/github/workspace' -e GITHUB_REPOSITORY='sandbox-go-ci' -e GITHUB_REF='v0.0.1' --name sandbox-go-ci-builder cvbarros/sandbox-go-ci-builder:latest
+
 clean:
 	@test ! -e bin/${BIN_NAME} || rm bin/${BIN_NAME}
 
